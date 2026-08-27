@@ -68,40 +68,12 @@ Note: `/pose_estimation_points` contains the coordinates of 17 key points on the
 
 <table >
   <tr>
-    <th>Development Hardware</th>
-     <td>Qualcomm Dragonwing™ IQ-9075 EVK</td>
-  </tr>
-  <tr>
-    <th>Hardware Overview</th>
-    <th><a href="https://www.qualcomm.com/products/internet-of-things/industrial-processors/iq9-series/iq-9075"><img src="https://s7d1.scene7.com/is/image/dmqualcommprod/dragonwing-IQ-9075-EVK?$QC_Responsive$&fmt=png-alpha" width="160"></a></th>
-  </tr>
-  <tr>
     <th>GMSL Camera Support</th>
     <td>LI-VENUS-OX03F10-OAX40-GM2A-118H(YUV)</td>
   </tr>
 </table>
 
 
-## ✨ Installation
-
-> [!IMPORTANT]
-> **PREREQUISITES**: The following steps need to be run on **Qualcomm Ubuntu** and **ROS Jazzy**.<br>
-> Reference [Install Ubuntu on Qualcomm IoT Platforms](https://ubuntu.com/download/qualcomm-iot) and [Install ROS Jazzy](https://docs.ros.org/en/jazzy/index.html) to setup environment. <br>
-> For Qualcomm Linux, please check out the [Qualcomm Intelligent Robotics Product SDK](https://docs.qualcomm.com/bundle/publicresource/topics/80-70018-265/introduction_1.html?vproduct=1601111740013072&version=1.4&facet=Qualcomm%20Intelligent%20Robotics%20Product%20(QIRP)%20SDK) documents.
-
-Add Qualcomm IOT PPA for Ubuntu:
-
-```bash
-sudo add-apt-repository ppa:ubuntu-qcom-iot/qcom-ppa
-sudo add-apt-repository ppa:ubuntu-qcom-iot/qirp
-sudo apt update
-```
-
-Install Debian package:
-
-```bash
-sudo apt install ros-jazzy-sample-hrnet-pose-estimation
-```
 
 ## 🚀 Usage
 
@@ -117,7 +89,7 @@ export ROS_DOMAIN_ID=124
 # Launch the sample with image publisher, You can replace 'image_path' with the path to your desired image.
 ros2 launch sample_hrnet_pose_estimation launch_with_image_publisher.py image_path:=/opt/ros/jazzy/share/sample_hrnet_pose_estimation/input_image.jpg
 # Launch the sample with qrb ros camera.
-ros2 launch sample_hrnet_pose_estimation launch_with_qrb_ros_camera.py
+ros2 launch sample_hrnet_pose_estimation launch_with_qrb_ros_camera_iq10.py
 ```
 
 Open a new terminal and use rqt to view topic `/pose_estimation_results`.
@@ -129,52 +101,6 @@ source /opt/ros/jazzy/setup.bash
 export ROS_DOMAIN_ID=124
 ros2 topic echo /pose_estimation_points
 ```
-
-</details>
-
-## 👨‍💻 Build from source
-
-<details>
-  <summary>Build from source details</summary>
-
-- Install dependency Debian packages from qcom ppa.
-```bash
-sudo add-apt-repository ppa:ubuntu-qcom-iot/qcom-ppa
-sudo add-apt-repository ppa:ubuntu-qcom-iot/qirp
-sudo apt update
-```
-
-- Install QRB ROS packages:
-```bash
-sudo apt install -y ros-jazzy-qrb-ros-camera ros-jazzy-qrb-ros-nn-inference ros-jazzy-qrb-ros-tensor-list-msgs
-sudo apt install -y ros-dev-tools
-sudo rosdep init
-rosdep update
-```
-
-- Download source code from qrb-ros-sample repository.
-```bash
-mkdir -p ~/qrb_ros_sample_ws/src && cd ~/qrb_ros_sample_ws/src
-git clone https://github.com/qualcomm-qrb-ros/qrb_ros_samples.git
-```
-
-- Download model.
-```bash
-sudo mkdir -p /opt/model && cd /opt/model
-
-wget https://huggingface.co/qualcomm/HRNetPose/resolve/6011b6e69a84dad8f53fb555b11035a5e26c8755/HRNetPose.bin?download=true -O HRNetPose.bin
-```
-
-- Build sample from source code.
-```bash
-cd ~/qrb_ros_sample_ws/src/qrb_ros_samples/ai_vision/sample_hrnet_pose_estimation
-rosdep install --from-paths . --ignore-src --rosdistro jazzy -y --skip-keys "qrb_ros_tensor_list_msgs qrb_ros_nn_inference qrb_ros_camera"
-source /opt/ros/jazzy/setup.bash
-colcon build
-source install/setup.bash
-```
-
-- Refer to the "Launch demo steps" section in Usage details to run the demo.
 
 </details>
 
