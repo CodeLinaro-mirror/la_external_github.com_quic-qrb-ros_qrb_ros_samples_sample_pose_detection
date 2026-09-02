@@ -1,0 +1,52 @@
+From 594b922a5e05a4ce7b74bf30d3d6a66173bc101c Mon Sep 17 00:00:00 2001
+From: hangshen <hangshen@qti.qualcomm.com>
+Date: Thu, 6 Aug 2026 16:20:56 +0800
+Subject: [PATCH] sample-pose-detection: drop forbidden deps for DDM
+
+Remove python3-opencv, ros-jazzy-cv-bridge and ros-jazzy-image-publisher
+from runtime Depends (and the matching exec_depend tags in package.xml).
+The build_depend cv_bridge/python3-opencv and Build-Depends entries are
+kept since they are compile-only and do not enter the image.
+
+Change-Id: I2b13d39b901c9f06b0b68c4aa8846e6bde4fcbbf
+---
+ debian/control | 2 +-
+ package.xml    | 3 ---
+ 2 files changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/debian/control b/debian/control
+index 2f0a6f1..cf641b9 100644
+--- a/debian/control
++++ b/debian/control
+@@ -8,5 +8,5 @@ Standards-Version: 3.9.2
+ 
+ Package: ros-jazzy-sample-hrnet-pose-estimation
+ Architecture: any
+-Depends: ${python3:Depends}, ${misc:Depends}, python3-numpy, python3-opencv, ros-jazzy-ament-index-python, ros-jazzy-cv-bridge, ros-jazzy-geometry-msgs, ros-jazzy-image-publisher, ros-jazzy-qrb-ros-camera, ros-jazzy-qrb-ros-nn-inference, ros-jazzy-qrb-ros-tensor-list-msgs, ros-jazzy-rclpy, ros-jazzy-sensor-msgs
++Depends: ${python3:Depends}, ${misc:Depends}, python3-numpy, ros-jazzy-ament-index-python, ros-jazzy-geometry-msgs, ros-jazzy-qrb-ros-camera, ros-jazzy-qrb-ros-nn-inference, ros-jazzy-qrb-ros-tensor-list-msgs, ros-jazzy-rclpy, ros-jazzy-sensor-msgs
+ Description: sample_hrnet_pose_estimation is a Python-based human pose estimation ROS node that uses QNN for model inference.
+diff --git a/package.xml b/package.xml
+index 5c7fbbd..3b38a84 100644
+--- a/package.xml
++++ b/package.xml
+@@ -21,17 +21,14 @@
+   <build_depend>cv_bridge</build_depend>
+ 
+   <!-- Execution dependencies -->
+-  <exec_depend>python3-opencv</exec_depend>
+   <exec_depend>rclpy</exec_depend>
+   <exec_depend>ament_index_python</exec_depend>
+   <exec_depend>sensor_msgs</exec_depend>
+   <exec_depend>geometry_msgs</exec_depend>
+   <exec_depend>python3-numpy</exec_depend>
+-  <exec_depend>image_publisher</exec_depend>
+   <exec_depend>qrb_ros_camera</exec_depend>
+   <exec_depend>qrb_ros_nn_inference</exec_depend>
+   <exec_depend>qrb_ros_tensor_list_msgs</exec_depend>
+-  <exec_depend>cv_bridge</exec_depend>
+ 
+   <!-- Test dependencies -->  
+   <test_depend>ament_copyright</test_depend>
+-- 
+2.43.0
+
