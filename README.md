@@ -86,6 +86,9 @@ Run the sample on device
 source /opt/ros/jazzy/setup.bash
 export ROS_DOMAIN_ID=124
 
+export ADSP_LIBRARY_PATH="/usr/lib/rfsa/adsp;/usr/lib/rfsa/adsp/hexagon-v81"
+export CDSP_LIBRARY_PATH="/vendor/dsp/cdsp0;/usr/lib/rfsa/adsp/hexagon-v81"
+
 # Launch the sample with image publisher, You can replace 'image_path' with the path to your desired image.
 ros2 launch sample_hrnet_pose_estimation launch_with_image_publisher.py image_path:=/opt/ros/jazzy/share/sample_hrnet_pose_estimation/input_image.jpg
 # Launch the sample with qrb ros camera.
